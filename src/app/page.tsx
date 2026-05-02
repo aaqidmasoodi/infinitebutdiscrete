@@ -1,66 +1,180 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+
+const links = [
+  {
+    label: 'Join the Discord Community',
+    url: 'https://discord.gg',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772.974 1.213 1.239a.078.078 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+      </svg>
+    ),
+  },
+  {
+    label: 'Buy Me a Coffee',
+    url: 'https://buymeacoffee.com/infinitebutdiscrete',
+    variant: 'coffee',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M2 21h18v-2H2m2-4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1H4v-1m4 2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1m-1-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v-1H5z"/>
+      </svg>
+    ),
+  },
+  {
+    label: '@infinitebutdiscrete',
+    url: 'https://www.youtube.com/@infinitebutdiscrete/',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+      </svg>
+    ),
+  },
+  {
+    label: '@infinitebutdiscrete',
+    url: 'https://www.instagram.com/infinitebutdiscrete/',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.249 1.12.598 1.602 1.082.48.485.833 1.942 1.602 1.602.248.638.415 1.363.465 2.428.047 1.066.06 1.405.06 4.122s-.01 3.056-.06 4.122c-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 0 1-1.602 1.602c-.638.248-1.363.415-2.428.465-1.066.047-1.405.06-4.122.06s-3.056-.01-4.122-.06c-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 0 1-1.602-1.602c-.248-.638-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12s.01-3.056.06-4.122c.05-1.066.217-1.79.465-2.428a4.88 4.88 0 0 1 1.602-1.602c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2m0 1.802c-2.67 0-2.986.01-4.04.058-.976.045-1.505.207-1.858.344-.45.18-.772.402-1.105.735-.333.334-.555.656-.735 1.105-.137.353-.3.882-.344 1.857-.048 1.055-.058 1.37-.058 4.041 0 2.67.01 2.986.058 4.04.045.977.207 1.505.344 1.858.18.45.402.772.735 1.105.334.333.656.555 1.105.735.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058 2.67 0 2.987-.01 4.04-.058.977-.045 1.505-.207 1.858-.344.45-.18.772-.402 1.105-.735.333-.334.555-.656.735-1.105.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041 0-2.67-.01-2.986-.058-4.04-.045-.977-.207-1.505-.344-1.858a3.097 3.097 0 0 0-1.105-.735c-.353-.137-.882-.3-1.857-.344-1.055-.048-1.37-.058-4.041-.058zm0 3.063a5.135 5.135 0 1 1 0 10.27 5.135 5.135 0 0 1 0-10.27zm0 8.468a3.333 3.333 0 1 0 0-6.666 3.333 3.333 0 0 0 0 6.666zm6.538-8.671a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/>
+      </svg>
+    ),
+  },
+  {
+    label: '@infinitebutdisc',
+    url: 'https://x.com/infinitebutdisc',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+      </svg>
+    ),
+  },
+  {
+    label: '@infinitebutdiscrete',
+    url: 'https://www.tiktok.com/@infinitebutdiscrete/',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93v6.16c0 2.52-1.12 4.84-3.11 6.18-2.15 1.45-4.78 1.6-7.03.16-1.76-1.14-2.84-3.35-2.74-5.37.11-2.29 1.38-4.37 3.28-5.67.87-.6 1.94-1.04 2.99-1.22-.14 2.14.58 3.99 2.19 5.14v4.31c-1.17-.45-2.47-.51-3.61.01-.91.42-1.57 1.24-1.79 2.22-.25.98.02 1.87.73 2.58.71.71 1.79.86 2.85.43 1.06-.43 1.57-1.59 1.42-2.7-.14-1.11-1.21-1.83-2.29-1.76-.54.03-1.07.29-1.36.63-.38.44-.34 1.17.2 1.58.53.5 1.42.59 2.14.26.83-.38 1.22-1.35.95-2.21-.26-.86-.96-1.49-1.82-1.65-.86-.16-1.77.01-2.51.59-.55.43-.83 1.15-.73 1.83.1.68.62 1.23 1.3 1.37v4.07c-.88-.22-1.79-.16-2.53.18-.74.35-1.27 1.03-1.35 1.85-.08.82.25 1.61.87 2.08.71.54 1.63.32 2.26-.23.61-.55.75-1.48.32-2.18-.36-.58-.99-.77-1.59-.62-.72.18-1.1 1.01-.88 1.7.18.69 1.01 1.09 1.73.89.28-.08.5-.27.6-.52.1-.25.08-.53.01-.78-.12-.44-.56-.7-.96-.59-1.18.2-1.5 1.55-.66 2.52.84.97 2.35.92 3.06-.16.71-1.08.49-2.6-.36-3.31-.85-.71-1.91-.59-2.65.19-.55.58-.72 1.52-.44 2.34.28.82.98 1.3 1.79 1.22v-6.21c-.95-.23-2.04-.07-2.74.65-.7.72-1.03 1.93-.6 2.85.44.93 1.54 1.24 2.45.69.91-.55 1.08-1.77.38-2.5-.7-.73-1.81-.83-2.53-.23-.56.47-.69 1.27-.36 1.92.33.65 1.14.84 1.78.42.08.22-.08.39-.28.52-.2.13-.48.14-.71-.02-.23-.15-.27-.44-.1-.64.16-.2.44-.28.65-.18.21.1.25.37.19.57-.06.2-.22.34-.41.35-.19.01-.37-.04-.5-.19-.13-.15-.17-.38-.11-.56.06-.18.24-.3.42-.32h.01c.21 0 .4.12.5.31.1.19.08.42-.05.59-.13.17-.32.24-.52.2-.2-.04-.38-.21-.46-.41-.08-.2.01-.43.22-.55.21-.12.48-.11.64.05.16.16.13.41-.07.54-.2.13-.47.07-.6-.13-.13-.2-.1-.47.08-.6.19-.13.45-.12.59.07.14.19.07.43-.15.56-.22.13-.48.04-.59-.2-.11-.24.03-.5.32-.59.29-.09.55.13.59.42.04.29-.08.53-.31.6-.23.07-.48.02-.64-.13-.16-.15-.16-.39-.01-.54.15-.15.42-.13.54.05.12.18.06.42-.15.54-.21.12-.46.02-.57-.21-.11-.23.06-.49.38-.56.32-.07.59.19.61.47.02.28-.14.5-.39.55-.25.05-.5.02-.68-.17-.18-.19-.17-.48.02-.64.19-.16.48-.15.63.02.15.17.08.42-.16.53-.24.11-.5.02-.6-.2-.1-.22.08-.45.4-.5.31-.05.58.22.59.49.01.27-.17.47-.44.51-.27.04-.51.01-.67-.2-.16-.21-.12-.48.1-.6.22-.12.47-.03.58.18.11.21.02.47-.21.58-.23.11-.49.01-.59-.21-.1-.22.1-.44.42-.48.32-.04.6.24.6.51 0 .27-.18.46-.45.49-.27.03-.51-.11-.51-.39-.02-.28.15-.46.42-.48.27-.02.5.12.51.4.01.28-.16.45-.43.46-.27.01-.49-.13-.49-.41 0-.27.19-.43.45-.43z"/>
+      </svg>
+    ),
+  },
+];
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <main style={styles.container}>
+      <div style={styles.content}>
+        <img
+          src="/profile.jpg"
+          alt="Profile"
+          style={styles.profileImg}
         />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
+
+        <h1 style={styles.username}>@infinitebutdiscrete</h1>
+        <p style={styles.bio}>Chess & IRL Streams!</p>
+
+        <div style={styles.links}>
+          {links.map((link) => (
             <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+              key={link.url}
+              href={link.url}
               target="_blank"
               rel="noopener noreferrer"
+              style={{
+                ...styles.link,
+                ...(link.variant === 'coffee' ? styles.linkCoffee : {}),
+              }}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              <span style={styles.icon}>{link.icon}</span>
+              {link.label}
+            </a>
+          ))}
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }
+
+const styles: Record<string, React.CSSProperties> = {
+  container: {
+    minHeight: '100vh',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '60px 20px',
+  },
+  content: {
+    maxWidth: '480px',
+    width: '100%',
+    textAlign: 'center',
+  },
+  profileImg: {
+    width: '120px',
+    height: '120px',
+    borderRadius: '50%',
+    objectFit: 'cover',
+    objectPosition: 'center',
+    border: '4px solid rgba(255, 255, 255, 0.2)',
+    marginBottom: '20px',
+    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+  },
+  username: {
+    fontSize: '1.25rem',
+    fontWeight: '600',
+    marginBottom: '8px',
+    color: '#fff',
+  },
+  bio: {
+    fontSize: '0.9rem',
+    color: 'rgba(255, 255, 255, 0.7)',
+    marginBottom: '32px',
+  },
+  links: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '16px',
+    width: '100%',
+    marginBottom: '32px',
+  },
+  link: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '12px',
+    background: 'rgba(255, 255, 255, 0.1)',
+    border: '1px solid rgba(255, 255, 255, 0.15)',
+    color: '#fff',
+    textDecoration: 'none',
+    padding: '18px 24px',
+    borderRadius: '50px',
+    fontSize: '1rem',
+    fontWeight: '500',
+    transition: 'all 0.3s ease',
+  },
+  linkCoffee: {
+    background: '#FFDD00',
+    color: '#000',
+  },
+  socials: {
+    display: 'flex',
+    justifyContent: 'center',
+    gap: '24px',
+  },
+  social: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '48px',
+    height: '48px',
+    background: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: '50%',
+    color: '#fff',
+    transition: 'all 0.3s ease',
+  },
+  icon: {
+    width: '24px',
+    height: '24px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+};
