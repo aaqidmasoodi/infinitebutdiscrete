@@ -7,7 +7,7 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 const links = [
   {
     label: 'Join the Discord Community',
-    url: 'https://discord.gg/bdFMrpkbBJ',
+    url: 'https://discord.gg/q2dTYuhQF9',
     icon: <FontAwesomeIcon icon={faDiscord} />,
   },
   {
